@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jio Ecosystem Vibe Phone Mockups</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
+body{background:#111827;color:#111;min-height:100vh;padding:28px;overflow-x:hidden}
+.stage{display:grid;grid-template-columns:repeat(3,1fr);gap:46px;align-items:start}
+.mock-wrap{position:relative;display:flex;justify-content:center}
+.app-name{position:absolute;right:-45px;top:220px;transform:rotate(90deg);font-size:34px;font-weight:900;color:rgba(255,255,255,.18);letter-spacing:3px;white-space:nowrap}
+.phone{width:330px;height:690px;border-radius:34px;background:#000;padding:10px;box-shadow:0 24px 70px rgba(0,0,0,.45);overflow:hidden;position:relative}
+.screen{width:100%;height:100%;border-radius:26px;overflow:hidden;background:#fff;position:relative}
+.page{display:none;height:100%;overflow-y:auto;padding-bottom:70px}
+.page.active{display:block}
+.page::-webkit-scrollbar{display:none}
+.status{height:25px;padding:6px 14px 0;display:flex;justify-content:space-between;font-size:11px;font-weight:700}
+
+/* JioTV */
+.jiotv .screen{background:#080808;color:#fff}
+.jiotv .top{height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;color:#fff}
+.jiotv .brand{font-weight:900}
+.jiotv .tabs{display:flex;gap:18px;padding:0 14px 10px;font-size:11px;font-weight:800;color:#aaa}
+.jiotv .tabs span{cursor:pointer;padding-bottom:7px}
+.jiotv .tabs .active{color:#fff;border-bottom:3px solid #e50935}
+.jiotv .tabs .vibe{color:#ff7a00}
+.jiotv .hero{margin:0 14px 14px;height:145px;border-radius:5px;background:url('https://images.pexels.com/photos/713149/pexels-photo-713149.jpeg?auto=compress&cs=tinysrgb&w=700') center/cover;position:relative}
+.jiotv .hero:after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.8),transparent)}
+.jiotv .hero h2{position:absolute;left:12px;bottom:12px;font-size:20px;z-index:2}
+.jiotv h3{font-size:14px;margin:12px 14px 8px}
+.jiotv .circle-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:0 14px}
+.jiotv .circle{height:62px;border-radius:50%;background:#ddd;position:relative;overflow:hidden}
+.jiotv .circle img{width:100%;height:100%;object-fit:cover}
+.jiotv .live{position:absolute;bottom:2px;left:50%;transform:translateX(-50%);background:#e50935;color:#fff;font-size:8px;padding:2px 5px;border-radius:3px}
+.jiotv .cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 14px}
+.jiotv .card{background:#1b1b1b;border-radius:8px;overflow:hidden}
+.jiotv .card img{width:100%;aspect-ratio:16/9;object-fit:cover}
+.jiotv .card h4{font-size:12px;padding:8px;line-height:1.25}
+.jiotv .bottom{position:absolute;bottom:0;left:0;right:0;height:58px;background:#171717;display:flex;justify-content:space-around;align-items:center;color:#888;font-size:10px}
+.jiotv .bottom div.active{color:#e50935;font-weight:900}
+
+/* Hotstar */
+.hotstar .screen{background:#070b13;color:#fff}
+.hotstar .brand-row{display:flex;gap:12px;padding:18px 16px 12px}
+.hotstar .pill{height:46px;flex:1;border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;background:linear-gradient(90deg,#112a57,#bd167a);box-shadow:0 0 14px rgba(0,120,255,.5)}
+.hotstar .pill.tadka{background:linear-gradient(90deg,#ff0062,#ffbd00)}
+.hotstar h2{font-size:22px;margin:12px 16px}
+.hotstar .hero-card{margin:0 16px;height:335px;border-radius:18px;background:url('https://images.pexels.com/photos/7991379/pexels-photo-7991379.jpeg?auto=compress&cs=tinysrgb&w=700') center/cover;position:relative;overflow:hidden}
+.hotstar .hero-card:after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.9),transparent)}
+.hotstar .hero-card h1{position:absolute;left:18px;bottom:78px;font-size:36px;z-index:2}
+.hotstar .hero-card p{position:absolute;left:18px;bottom:38px;font-size:14px;color:#ddd;z-index:2}
+.hotstar .play{position:absolute;right:25px;bottom:28px;width:52px;height:52px;border-radius:50%;background:#fff;color:#000;display:flex;align-items:center;justify-content:center;font-size:22px;z-index:3}
+.hotstar .bottom{position:absolute;bottom:0;left:0;right:0;height:62px;background:#080b12;display:flex;justify-content:space-around;align-items:center;color:#aaa;font-size:12px}
+.hotstar .bottom div.active{color:#fff;font-weight:900}
+.hotstar .bottom .vibe{color:#ff7a00;font-weight:900}
+
+/* MyJio */
+.myjio .screen{background:#eef3ff;color:#111}
+.myjio .top{height:74px;display:flex;align-items:center;justify-content:space-between;padding:0 18px}
+.myjio .jio-logo{width:38px;height:38px;border-radius:50%;background:#244cff;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px}
+.myjio .icons{display:flex;gap:18px;font-size:24px;color:#002d7a}
+.myjio .banner{height:150px;margin:0 18px 18px;border-radius:16px;background:url('https://images.pexels.com/photos/163452/cricket-stadium-people-playing-163452.jpeg?auto=compress&cs=tinysrgb&w=800') center/cover;position:relative;overflow:hidden}
+.myjio .banner:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.8),transparent)}
+.myjio .banner h2{position:absolute;left:18px;top:28px;color:#fff;font-size:20px;z-index:2}
+.myjio .grid{background:#fff;border-radius:24px 24px 0 0;padding:22px 18px;margin-top:4px}
+.myjio .service-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.myjio .service{height:72px;border:1px solid #ddd;border-radius:12px;padding:12px;background:#fff}
+.myjio .service h3{font-size:17px;font-weight:900}
+.myjio .service p{font-size:12px;color:#666;margin-top:3px}
+.myjio .service.vibe h3{color:#ff7a00}
+.myjio .bottom{position:absolute;bottom:0;left:0;right:0;height:62px;background:#fff;display:flex;justify-content:space-around;align-items:center;border-top:1px solid #ddd;font-size:11px;color:#555}
+.myjio .bottom div.active{color:#244cff;font-weight:900}
+
+/* Common Vibe */
+.vibe-page{background:#fff;color:#111}
+.hotstar .vibe-page,.jiotv .vibe-page{background:#070b13;color:#fff}
+.vibe-banner{height:170px;margin:14px;border-radius:14px;position:relative;overflow:hidden;background:url('https://images.pexels.com/photos/7991579/pexels-photo-7991579.jpeg?auto=compress&cs=tinysrgb&w=700') center/cover}
+.vibe-banner:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.82),rgba(0,0,0,.15))}
+.vibe-banner h1{position:absolute;left:16px;top:32px;width:220px;color:#fff;font-size:24px;line-height:1.05;z-index:2}
+.vibe-banner p{position:absolute;left:16px;top:92px;width:225px;color:#ddd;font-size:12px;line-height:1.3;z-index:2}
+.sec{padding:0 14px;margin-top:16px}
+.sec h2{font-size:18px;margin-bottom:10px}
+.video-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.video-card{border-radius:10px;overflow:hidden;background:#f3f3f3;color:#111}
+.jiotv .video-card,.hotstar .video-card{background:#121a27;color:#fff}
+.video-thumb{aspect-ratio:16/9;position:relative}
+.video-thumb img{width:100%;height:100%;object-fit:cover}
+.badge{position:absolute;left:6px;top:6px;border-radius:10px;background:#006bff;color:#fff;padding:4px 7px;font-size:9px;font-weight:900}
+.badge.live{background:#e50935}
+.video-card h4{font-size:12px;line-height:1.2;padding:7px}
+.shorts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.short{border-radius:9px;overflow:hidden;position:relative;background:#ddd}
+.short img{width:100%;aspect-ratio:9/16;object-fit:cover;display:block}
+.short:after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.8),transparent)}
+.short h4{position:absolute;bottom:8px;left:6px;right:6px;color:#fff;font-size:10px;z-index:2}
+.channels{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
+.channel{display:flex;align-items:center;gap:8px;border-radius:10px;padding:8px;background:#f3f3f3}
+.jiotv .channel,.hotstar .channel{background:#121a27}
+.channel img{width:34px;height:34px;border-radius:50%;object-fit:cover}
+.channel h4{font-size:11px}
+.channel p{font-size:9px;color:#777;margin-top:2px}
+</style>
+</head>
+<body>
+
+<div class="stage">
+
+  <!-- JioTV -->
+  <div class="mock-wrap">
+    <div class="phone jiotv">
+      <div class="screen">
+        <div id="jiotvHome" class="page active">
+          <div class="status"><span>12:19</span><span>▮▮ WiFi ◉</span></div>
+          <div class="top"><span>☰</span><div class="brand">JioTV</div><span>⌕</span></div>
+          <div class="tabs">
+            <span class="active">FOR YOU</span><span onclick="show('jiotvVibe','jiotvHome')">VIBE</span><span>TV GUIDE</span><span>SHOWS</span><span>SPORTS</span>
+          </div>
+          <div class="hero"><h2>For You</h2></div>
+          <h3>Channels You Watch</h3>
+          <div class="circle-row">
+            <div class="circle"><img src="https://images.pexels.com/photos/1201996/pexels-photo-1201996.jpeg?auto=compress&cs=tinysrgb&w=200"><span class="live">LIVE</span></div>
+            <div class="circle"><img src="https://images.pexels.com/photos/7991579/pexels-photo-7991579.jpeg?auto=compress&cs=tinysrgb&w=200"><span class="live">LIVE</span></div>
+            <div class="circle"><img src="https://images.pexels.com/photos/274422/pexels-photo-274422.jpeg?auto=compress&cs=tinysrgb&w=200"><span class="live">LIVE</span></div>
+            <div class="circle"><img src="https://images.pexels.com/photos/7991379/pexels-photo-7991379.jpeg?auto=compress&cs=tinysrgb&w=200"><span class="live">LIVE</span></div>
+          </div>
+          <h3>Programmes You Watch</h3>
+          <div class="cards">
+            <div class="card"><img src="https://images.pexels.com/photos/3945317/pexels-photo-3945317.jpeg?auto=compress&cs=tinysrgb&w=500"><h4>The Right Stand</h4></div>
+            <div class="card"><img src="https://images.pexels.com/photos/7991579/pexels-photo-7991579.jpeg?auto=compress&cs=tinysrgb&w=500"><h4>Kaun Banega Crorepati</h4></div>
+          </div>
+        </div>
+
+        <div id="jiotvVibe" class="page vibe-page">
+          <div class="status"><span>12:19</span><span>▮▮ WiFi ◉</span></div>
+          <div class="top"><span onclick="show('jiotvHome','jiotvVibe')">‹</span><div class="brand" style="color:#ff7a00">Vibe</div><span>⌕</span></div>
+          <div class="vibe-banner">
+            <h1>Live TV reactions and fan clips</h1>
+            <p>Watch creator reactions, TV memes, discussion clips and trending shorts.</p>
+          </div>
+          <div class="sec"><h2>Live & Videos</h2><div class="video-grid">
+            <div class="video-card"><div class="video-thumb"><img src="https://images.pexels.com/photos/7991379/pexels-photo-7991379.jpeg?auto=compress&cs=tinysrgb&w=500"><span class="badge live">LIVE</span></div><h4>Live TV reaction stream</h4></div>
+            <div class="video-card"><div class="video-thumb"><img src="https://images.pexels.com/photos/3945317/pexels-photo-3945317.jpeg?auto=compress&cs=tinysrgb&w=500"><span class="badge">VIDEO</span></div><h4>News debate highlights</h4></div>
+          </div></div>
+          <div class="sec"><h2>Shorts</h2><div class="shorts">
+            <div class="short"><img src="https://images.pexels.com/photos/713149/pexels-photo-713149.jpeg?auto=compress&cs=tinysrgb&w=300"><h4>TV meme</h4></div>
+            <div class="short"><img src="https://images.pexels.com/photos/7991579/pexels-photo-7991579.jpeg?auto=compress&cs=tinysrgb&w=300"><h4>Serial twist</h4></div>
+            <div class="short"><img src="https://images.pexels.com/photos/274422/pexels-photo-274422.jpeg?auto=compress&cs=tinysrgb&w=300"><h4>Sports clip</h4></div>
+          </div></div>
+          <div class="sec"><h2>Channels</h2><div class="channels">
+            <div class="channel"><img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=100"><div><h4>TV Reactions</h4><p>Live shows</p></div></div>
+            <div class="channel"><img src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=100"><div><h4>Meme Studio</h4><p>Fan clips</p></div></div>
+          </div></div>
+        </div>
+
+        <div class="bottom"><div class="active">⌂<br>Home</div><div>▣<br>Networks</div><div>☯<br>Channels</div><div>▤<br>More</div></div>
+      </div>
+    </div>
+    <div class="app-name">JioTV</div>
+  </div>
+
+  <!-- JioHotstar -->
+  <div class="mock-wrap">
+    <div class="phone hotstar">
+      <div class="screen">
+        <div id="hotHome" class="page active">
+          <div class="brand-row"><div class="pill">✦ JioHotstar</div><div class="pill tadka">✦ TADKA</div></div>
+          <h2>For You</h2>
+          <div class="hero-card"><h1>Chiraiya</h1><p>New Episode<br>2026 • 1 Season • 12 Languages</p><div class="play">▶</div></div>
+          <h2>Continue Watching</h2>
+        </div>
+        <div id="hotVibe" class="page vibe-page">
+          <div class="brand-row"><div class="pill" style="color:#ff7a00">✦ Vibe</div><div class="pill tadka">LIVE</div></div>
+          <div class="vibe-banner"><h1>Fan edits and watch-party clips</h1><p>Creator reactions, entertainment shorts and live watch-alongs.</p></div>
+          <div class="sec"><h2>Live & Videos</h2><div class="video-grid">
+            <div class="video-card"><div class="video-thumb"><img src="https://images.pexels.com/photos/7991579/pexels-photo-7991579.jpeg?auto=compress&cs=tinysrgb&w=500"><span class="badge live">LIVE</span></div><h4>Episode watch party</h4></div>
+            <div class="video-card"><div class="video-thumb"><img src="https://images.pexels.com/photos/7991379/pexels-photo-7991379.jpeg?auto=compress&cs=tinysrgb&w=500"><span class="badge">VIDEO</span></div><h4>Scene reaction clip</h4></div>
+          </div></div>
+          <div class="sec"><h2>Shorts</h2><div class="shorts">
+            <div class="short"><img src="https://images.pexels.com/photos/3812743/pexels-photo-3812743.jpeg?auto=compress&cs=tinysrgb&w=300"><h4>Fan edit</h4></div>
+            <div class="short"><img src="https://images.pexels.com/photos/787961/pexels-photo-787961.jpeg?auto=compress&cs=tinysrgb&w=300"><h4>Reaction</h4></div>
+            <div class="short"><img src="https://images.pexels.com/photos/713149/pexels-photo-713149.jpeg?auto=compress&cs=tinysrgb&w=300"><h4>Watch clip</h4></div>
+          </div></div>
+          <div class="sec"><h2>Channels</h2><div class="channels">
+            <div class="channel"><img src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=100"><div><h4>Reaction Room</h4><p>Movie clips</p></div></div>
+            <div class="channel"><img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=100"><div><h4>Fan Edits</h4><p>Creator cuts</p></div></div>
+          </div></div>
+        </div>
+        <div class="bottom"><div>⌕</div><div class="active" onclick="show('hotHome','hotVibe')">✦<br>Home</div><div class="vibe" onclick="show('hotVibe','hotHome')">V<br>Vibe</div><div>●</div></div>
+      </div>
+    </div>
+    <div class="app-name">JioHotstar</div>
+  </div>
+
+  <!-- MyJio -->
+  <div class="mock-wrap">
+    <div class="phone myjio">
+      <div class="screen">
+        <div id="myHome" class="page active">
+          <div class="status"><span>11:53:33</span><span>▮▮ 36%</span></div>
+          <div class="top"><div class="jio-logo">Jio</div><div class="icons">⌘ ⌕ ▦ 🔔</div></div>
+          <div class="banner"><h2>POWER PLAY PASS ₹99</h2></div>
+          <div class="grid">
+            <div class="service-grid">
+              <div class="service"><h3>MOBILE</h3><p>True 5G speeds</p></div>
+              <div class="service"><h3>HOME</h3><p>Fiber & AirFiber</p></div>
+              <div class="service"><h3>ENTERTAINMENT</h3><p>TV, music & games</p></div>
+              <div class="service"><h3>FINANCE</h3><p>One-stop finance</p></div>
+              <div class="service"><h3>AICLOUD</h3><p>Easy backup</p></div>
+              <div class="service"><h3>GAMES</h3><p>Unlimited fun zone</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="myVibe" class="page vibe-page">
+          <div class="status"><span>11:53:33</span><span>▮▮ 36%</span></div>
+          <div class="top"><div class="jio-logo">Jio</div><div style="font-size:24px;color:#ff7a00;font-weight:900">Vibe</div></div>
+          <div class="vibe-banner"><h1>Creator content inside MyJio</h1><p>Trending live streams, videos, shorts and creator channels.</p></div>
+          <div class="sec"><h2>Live & Videos</h2><div class="video-grid">
+            <div class="video-card"><div class="video-thumb"><img src="https://images.pexels.com/photos/442576/pexels-photo-442576.jpeg?auto=compress&cs=tinysrgb&w=500"><span class="badge live">LIVE</span></div><h4>Gaming creator live</h4></div>
+            <div class="video-card"><div class="video-thumb"><img src="https://images.pexels.com/photos/3812743/pexels-photo-3812743.jpeg?auto=compress&cs=tinysrgb&w=500"><span class="badge">VIDEO</span></div><h4>Mobile entertainment picks</h4></div>
+          </div></div>
+          <div class="sec"><h2>Shorts</h2><div class="shorts">
+            <div class="short"><img src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=300"><h4>Daily vibe</h4></div>
+            <div class="short"><img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=300"><h4>Tech tip</h4></div>
+            <div class="short"><img src="https://images.pexels.com/photos/442576/pexels-photo-442576.jpeg?auto=compress&cs=tinysrgb&w=300"><h4>Game clip</h4></div>
+          </div></div>
+          <div class="sec"><h2>Channels</h2><div class="channels">
+            <div class="channel"><img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=100"><div><h4>Mobile Creators</h4><p>Tips & apps</p></div></div>
+            <div class="channel"><img src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=100"><div><h4>Daily Vibes</h4><p>Shorts</p></div></div>
+          </div></div>
+        </div>
+
+        <div class="bottom">
+          <div class="active" onclick="show('myHome','myVibe')">Jio<br>MyJio</div>
+          <div>₹<br>Recharge</div>
+          <div onclick="show('myVibe','myHome')" style="color:#ff7a00;font-weight:900">V<br>Vibe</div>
+          <div>♫<br>JioTunes</div>
+          <div>☊<br>JioCare</div>
+        </div>
+      </div>
+    </div>
+    <div class="app-name">MyJio</div>
+  </div>
+
+</div>
+
+<script>
+function show(showId, hideId){
+  document.getElementById(hideId).classList.remove('active');
+  document.getElementById(showId).classList.add('active');
+}
+</script>
+
+</body>
+</html>
