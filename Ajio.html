@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AJIO App Vibe Mockup</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
+body{background:#f2f2f2;display:flex;justify-content:center;color:#111}
+.phone{width:390px;min-height:100vh;background:#fff;overflow:hidden;box-shadow:0 0 30px rgba(0,0,0,.18);position:relative}
+.status{height:34px;padding:8px 20px 0;display:flex;justify-content:space-between;font-size:14px;font-weight:600;background:#fff}
+.top{height:62px;display:flex;align-items:center;gap:14px;padding:0 14px;border-bottom:1px solid #eee;background:#fff}
+.search{flex:1;height:40px;border-radius:12px;background:#f1f2f4;display:flex;align-items:center;padding:0 12px;gap:8px;color:#999;font-size:14px}
+.ajio-logo{width:28px;height:28px;border-radius:50%;background:#17324a;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px}
+.top-icon{font-size:24px;color:#111;transition:.25s}
+.top-icon:hover{transform:scale(1.15)}
+.page{display:none;padding-bottom:88px}
+.page.active{display:block}
+.cat-row{height:84px;display:flex;align-items:center;gap:23px;padding:0 18px;overflow:hidden;background:#fff}
+.cat{text-align:center;font-size:14px;font-weight:600;color:#555;min-width:48px;transition:.25s}
+.cat:hover{transform:scale(1.08)}
+.cat-img{width:42px;height:42px;border-radius:50%;object-fit:cover;margin-bottom:5px}
+.home-icon{font-size:28px;color:#000;border-bottom:3px solid #000;padding-bottom:8px}
+.tile-row{display:flex;gap:7px;padding:0 4px 8px;overflow:hidden}
+.tile{min-width:70px;height:70px;border-radius:7px;overflow:hidden;border:2px solid #c33;background:#eee;position:relative;transition:.25s}
+.tile:hover{transform:scale(1.08)}
+.tile img{width:100%;height:100%;object-fit:cover}
+.tile span{position:absolute;bottom:5px;left:0;right:0;text-align:center;color:#fff;font-size:10px;font-weight:900;text-shadow:0 1px 4px #000}
+.strip{height:38px;margin:0 3px 8px;border-radius:4px;background:linear-gradient(90deg,#dff3ff,#fff);border:1px solid #9cc7db;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:#111;transition:.25s}
+.strip:hover{transform:scale(1.02)}
+.strip b{background:#7ed1ff;padding:2px 7px;border-radius:3px;margin-left:5px}
+.hero{margin:0 3px;border-radius:6px;overflow:hidden;height:250px;position:relative;background:url('https://images.pexels.com/photos/1926769/pexels-photo-1926769.jpeg?auto=compress&cs=tinysrgb&w=800') center/cover no-repeat;transition:.3s}
+.hero:hover{transform:scale(1.02)}
+.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(180,0,0,.15),rgba(120,0,0,.35))}
+.live-now{position:absolute;right:12px;top:12px;color:#fff;font-size:12px;font-weight:900;z-index:2}
+.hero-text{position:absolute;left:0;right:0;bottom:25px;text-align:center;color:#fff;z-index:2;text-shadow:0 2px 5px #000}
+.hero-text h1{font-size:32px;letter-spacing:1px}
+.hero-text h2{font-size:37px;margin-top:4px}
+.dots{height:24px;display:flex;align-items:center;justify-content:center;gap:6px}
+.dots span{width:32px;height:3px;background:#ddd;border-radius:4px}
+.dots span:first-child{background:#ad9b78}
+.offer{height:48px;margin:0 6px 8px;border-radius:6px;border:1px solid #bbb;background:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;gap:8px;transition:.25s}
+.offer:hover{transform:scale(1.02)}
+.offer .bank{color:#d71920;font-size:24px}
+.fashion-banner{height:140px;margin:0 4px 10px;border-radius:4px;overflow:hidden;background:linear-gradient(90deg,#f6f1e8,#f6a13a);display:flex;align-items:center;position:relative;transition:.25s}
+.fashion-banner:hover{transform:scale(1.02)}
+.fashion-banner img{height:100%;width:48%;object-fit:cover}
+.fashion-banner h3{font-size:20px;color:#fff;font-weight:900;width:48%;line-height:1.15}
+
+/* VIBE PAGE */
+.vibe-page{background:#fff}
+.vibe-hero{height:210px;margin:10px 8px 14px;border-radius:14px;overflow:hidden;position:relative;background:url('https://images.pexels.com/photos/977796/pexels-photo-977796.jpeg?auto=compress&cs=tinysrgb&w=900') center/cover no-repeat;transition:.3s}
+.vibe-hero:hover{transform:scale(1.02);box-shadow:0 12px 28px rgba(0,0,0,.18)}
+.vibe-hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.78),rgba(0,0,0,.18))}
+.vibe-hero-text{position:absolute;left:18px;top:28px;color:#fff;z-index:2;width:250px}
+.vibe-hero-text small{display:inline-flex;background:#e50935;border-radius:14px;padding:6px 10px;font-size:10px;font-weight:900;margin-bottom:12px}
+.vibe-hero-text h1{font-size:26px;line-height:1.05;font-weight:900;margin-bottom:9px}
+.vibe-hero-text p{font-size:12px;line-height:1.35;color:#eee;font-weight:600}
+.vibe-section{padding:0 10px;margin-top:14px}
+.vibe-section h2{font-size:20px;font-weight:900;margin-bottom:10px}
+.video-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.video-card{border-radius:10px;overflow:hidden;background:#f5f5f5;transition:.3s}
+.video-card:hover{transform:scale(1.04);box-shadow:0 10px 22px rgba(0,0,0,.14)}
+.video-thumb{aspect-ratio:16/9;position:relative;overflow:hidden}
+.video-thumb img{width:100%;height:100%;object-fit:cover;transition:.3s}
+.video-card:hover img{transform:scale(1.08)}
+.badge{position:absolute;top:6px;left:6px;background:#174bdb;color:#fff;border-radius:10px;padding:4px 7px;font-size:9px;font-weight:900}
+.badge.live{background:#e50935}
+.video-card h4{font-size:12px;line-height:1.25;padding:7px;font-weight:900}
+.video-card p{font-size:10px;color:#666;line-height:1.3;padding:0 7px 8px;font-weight:600}
+.shorts-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.short{border-radius:9px;overflow:hidden;position:relative;transition:.3s;background:#ddd}
+.short:hover{transform:scale(1.06);box-shadow:0 10px 22px rgba(0,0,0,.14)}
+.short img{width:100%;aspect-ratio:9/16;object-fit:cover;display:block;transition:.3s}
+.short:hover img{transform:scale(1.08)}
+.short:after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.75),transparent)}
+.short h4{position:absolute;left:6px;right:6px;bottom:7px;color:#fff;font-size:11px;line-height:1.1;z-index:2}
+.channel-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.channel{display:flex;align-items:center;gap:8px;border:1px solid #eee;border-radius:10px;padding:8px;background:#fff;transition:.25s}
+.channel:hover{transform:scale(1.04);box-shadow:0 8px 20px rgba(0,0,0,.1)}
+.channel img{width:38px;height:38px;border-radius:50%;object-fit:cover}
+.channel h4{font-size:12px;font-weight:900}
+.channel p{font-size:10px;color:#666;margin-top:2px}
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:390px;height:76px;background:#fff;border-top:6px solid #3e16e8;display:flex;align-items:center;justify-content:space-around;z-index:30}
+.nav-item{text-align:center;font-size:10px;color:#222;font-weight:500;transition:.25s;cursor:pointer;width:16.66%}
+.nav-item:hover{transform:scale(1.08)}
+.nav-item .ico{font-size:22px;margin-bottom:4px;height:24px}
+.nav-item.active{color:#111;font-weight:900}
+.nav-item.vibe-tab{color:#ff7a00;font-weight:900}
+.nav-item.hot .ico{color:#074dac;font-weight:900;font-size:19px}
+.nav-item.vibe-tab .ico{color:#ff7a00;font-weight:900}
+</style>
+</head>
+<body>
+
+<div class="phone">
+
+  <div class="status">
+    <span>11:22:12</span>
+    <span>◉ ⌁ 1.50 MB/s  ◒  ▮▮ 28%</span>
+  </div>
+
+  <div class="top">
+    <div class="search">
+      <div class="ajio-logo">A</div>
+      <span>Search by product, brand...</span>
+      <span style="margin-left:auto;color:#111;font-size:20px">▣</span>
+    </div>
+    <div class="top-icon">♢</div>
+    <div class="top-icon">♡</div>
+    <div class="top-icon">▢</div>
+  </div>
+
+  <main id="homePage" class="page active">
+
+    <div class="cat-row">
+      <div class="cat"><div class="home-icon">⌂</div></div>
+      <div class="cat"><img class="cat-img" src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=200">Men</div>
+      <div class="cat"><img class="cat-img" src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=200">Women</div>
+      <div class="cat"><img class="cat-img" src="https://images.pexels.com/photos/3661355/pexels-photo-3661355.jpeg?auto=compress&cs=tinysrgb&w=200">Kids</div>
+      <div class="cat"><img class="cat-img" src="https://images.pexels.com/photos/7679720/pexels-photo-7679720.jpeg?auto=compress&cs=tinysrgb&w=200">Sale</div>
+    </div>
+
+    <div class="tile-row">
+      <div class="tile"><img src="https://images.pexels.com/photos/1926769/pexels-photo-1926769.jpeg?auto=compress&cs=tinysrgb&w=300"><span>AJIO RUSH</span></div>
+      <div class="tile"><img src="https://images.pexels.com/photos/1375736/pexels-photo-1375736.jpeg?auto=compress&cs=tinysrgb&w=300"><span>AJIO LUXE</span></div>
+      <div class="tile"><img src="https://images.pexels.com/photos/3373739/pexels-photo-3373739.jpeg?auto=compress&cs=tinysrgb&w=300"><span>BEAUTY</span></div>
+      <div class="tile"><img src="https://images.pexels.com/photos/5632397/pexels-photo-5632397.jpeg?auto=compress&cs=tinysrgb&w=300"><span>SHOP SMART</span></div>
+      <div class="tile"><img src="https://images.pexels.com/photos/977796/pexels-photo-977796.jpeg?auto=compress&cs=tinysrgb&w=300"><span>TOP BRANDS</span></div>
+    </div>
+
+    <div class="strip">🚚 PRIORITY DELIVERY&nbsp; BEST OF BRANDS IN <b>24 HOURS</b></div>
+
+    <div class="hero">
+      <div class="live-now">● LIVE NOW</div>
+      <div class="hero-text">
+        <h1>RED HOT SALE</h1>
+        <div>You Either Get It or You Don’t</div>
+        <h2>50-90% OFF*</h2>
+        <div>[SHOP NOW]</div>
+      </div>
+    </div>
+
+    <div class="dots">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+    <div class="offer"><span class="bank">◆ HSBC</span> 12% INSTANT DISCOUNT*</div>
+
+    <div class="fashion-banner">
+      <img src="https://images.pexels.com/photos/1007018/pexels-photo-1007018.jpeg?auto=compress&cs=tinysrgb&w=500">
+      <h3>YOUR 1ST SHOPPING SPREE IS ON US</h3>
+    </div>
+
+  </main>
+
+  <main id="vibePage" class="page vibe-page">
+
+    <div class="vibe-hero">
+      <div class="vibe-hero-text">
+        <small>LIVE SHOPPING</small>
+        <h1>Style creators are live now</h1>
+        <p>Watch outfit picks, sale finds and creator recommendations.</p>
+      </div>
+    </div>
+
+    <section class="vibe-section">
+      <h2>Live & Videos</h2>
+
+      <div class="video-grid">
+
+        <div class="video-card">
+          <div class="video-thumb">
+            <img src="https://images.pexels.com/photos/7679720/pexels-photo-7679720.jpeg?auto=compress&cs=tinysrgb&w=700">
+            <div class="badge live">LIVE</div>
+          </div>
+          <h4>Live outfit styling under sale</h4>
+          <p>Creators style new sale looks.</p>
+        </div>
+
+        <div class="video-card">
+          <div class="video-thumb">
+            <img src="https://images.pexels.com/photos/977796/pexels-photo-977796.jpeg?auto=compress&cs=tinysrgb&w=700">
+            <div class="badge">VIDEO</div>
+          </div>
+          <h4>Top brand looks for weekend</h4>
+          <p>Fashion picks from top brands.</p>
+        </div>
+
+        <div class="video-card">
+          <div class="video-thumb">
+            <img src="https://images.pexels.com/photos/1007018/pexels-photo-1007018.jpeg?auto=compress&cs=tinysrgb&w=700">
+            <div class="badge">VIDEO</div>
+          </div>
+          <h4>AJIO sale haul guide</h4>
+          <p>Best outfits for this week.</p>
+        </div>
+
+        <div class="video-card">
+          <div class="video-thumb">
+            <img src="https://images.pexels.com/photos/1375736/pexels-photo-1375736.jpeg?auto=compress&cs=tinysrgb&w=700">
+            <div class="badge live">LIVE</div>
+          </div>
+          <h4>Luxury creator live picks</h4>
+          <p>Premium looks and styling.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="vibe-section">
+      <h2>Shorts</h2>
+
+      <div class="shorts-row">
+        <div class="short"><img src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=400"><h4>Red sale look</h4></div>
+        <div class="short"><img src="https://images.pexels.com/photos/3373739/pexels-photo-3373739.jpeg?auto=compress&cs=tinysrgb&w=400"><h4>Beauty picks</h4></div>
+        <div class="short"><img src="https://images.pexels.com/photos/1375736/pexels-photo-1375736.jpeg?auto=compress&cs=tinysrgb&w=400"><h4>Luxury fit</h4></div>
+        <div class="short"><img src="https://images.pexels.com/photos/1926769/pexels-photo-1926769.jpeg?auto=compress&cs=tinysrgb&w=400"><h4>Sale haul</h4></div>
+      </div>
+    </section>
+
+    <section class="vibe-section">
+      <h2>Creator Channels</h2>
+
+      <div class="channel-row">
+
+        <div class="channel">
+          <img src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=200">
+          <div><h4>Style Studio</h4><p>Outfit reels</p></div>
+        </div>
+
+        <div class="channel">
+          <img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=200">
+          <div><h4>AJIO Hauls</h4><p>Sale finds</p></div>
+        </div>
+
+        <div class="channel">
+          <img src="https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=200">
+          <div><h4>Luxe Looks</h4><p>Premium fashion</p></div>
+        </div>
+
+        <div class="channel">
+          <img src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=200">
+          <div><h4>Beauty Drops</h4><p>Beauty creators</p></div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+</div>
+
+<div class="bottom-nav">
+  <div class="nav-item active" onclick="openPage('homePage',this)"><div class="ico">⌘</div>Switch</div>
+  <div class="nav-item hot"><div class="ico">hot</div>Right Now</div>
+  <div class="nav-item"><div class="ico">◎</div>Ajiogram</div>
+  <div class="nav-item"><div class="ico">☷</div>Categories</div>
+  <div class="nav-item"><div class="ico">♙</div>Account</div>
+  <div class="nav-item vibe-tab" onclick="openPage('vibePage',this)"><div class="ico">V</div>Vibe</div>
+</div>
+
+<script>
+function openPage(id, el){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  el.classList.add('active');
+}
+</script>
+
+</body>
+</html>
