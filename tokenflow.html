@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>JioVibe Token Flow</title>
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    min-height: 100vh;
+    font-family: Inter, Arial, sans-serif;
+    background:
+      radial-gradient(circle at 20% 10%, rgba(255, 122, 0, 0.18), transparent 28%),
+      radial-gradient(circle at 85% 80%, rgba(230, 81, 0, 0.18), transparent 32%),
+      linear-gradient(135deg, #fff6ed 0%, #ffffff 45%, #ffe4cc 100%);
+    color: #4a0e0e;
+    overflow: hidden;
+  }
+
+  .slide {
+    width: 100vw;
+    height: 100vh;
+    padding: 44px 56px;
+    display: grid;
+    grid-template-columns: 58% 42%;
+    gap: 34px;
+  }
+
+  .left {
+    position: relative;
+    border-radius: 34px;
+    background: rgba(255, 255, 255, 0.68);
+    border: 1px solid rgba(255, 210, 179, 0.9);
+    box-shadow: 0 30px 90px rgba(74, 14, 14, 0.12);
+    backdrop-filter: blur(18px);
+    padding: 28px;
+    overflow: hidden;
+  }
+
+  .left::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(120deg, rgba(255,255,255,0.75), transparent 40%),
+      radial-gradient(circle at 50% 55%, rgba(255, 122, 0, 0.1), transparent 45%);
+    pointer-events: none;
+  }
+
+  .wallet-card {
+    position: relative;
+    width: 260px;
+    padding: 18px 20px;
+    border-radius: 24px;
+    background: linear-gradient(135deg, #4a0e0e, #2a0a0a);
+    color: white;
+    box-shadow: 0 18px 40px rgba(74, 14, 14, 0.28);
+    z-index: 2;
+  }
+
+  .wallet-label {
+    font-size: 13px;
+    opacity: 0.8;
+    letter-spacing: 0.4px;
+    margin-bottom: 8px;
+  }
+
+  .wallet-balance {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 30px;
+    font-weight: 800;
+  }
+
+  .coin {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ffd27a, #ff7a00);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #4a0e0e;
+    font-weight: 900;
+    box-shadow: 0 0 18px rgba(255, 122, 0, 0.7);
+  }
+
+  .wallet-note {
+    margin-top: 10px;
+    font-size: 12px;
+    opacity: 0.78;
+  }
+
+  .flow-title {
+    position: relative;
+    z-index: 2;
+    margin-top: 30px;
+    font-size: 32px;
+    font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: -0.8px;
+  }
+
+  .flow-title span {
+    color: #ff7a00;
+  }
+
+  .flow-area {
+    position: relative;
+    z-index: 2;
+    height: calc(100% - 150px);
+    min-height: 520px;
+  }
+
+  .circle-wrap {
+    position: absolute;
+    left: 50%;
+    top: 52%;
+    width: 530px;
+    height: 530px;
+    transform: translate(-50%, -50%);
+  }
+
+  .ring {
+    position: absolute;
+    inset: 72px;
+    border-radius: 50%;
+    border: 2px dashed rgba(255, 122, 0, 0.45);
+    animation: rotateRing 18s linear infinite;
+  }
+
+  @keyframes rotateRing {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .orbit-token {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 28px;
+    height: 28px;
+    margin-left: -14px;
+    margin-top: -14px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ffe9a8, #ff7a00);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 900;
+    color: #4a0e0e;
+    box-shadow: 0 0 22px rgba(255, 122, 0, 0.75);
+    animation: orbit 7s linear infinite;
+    z-index: 5;
+  }
+
+  .orbit-token.two {
+    animation-delay: -2.3s;
+    transform: scale(0.82);
+    opacity: 0.9;
+  }
+
+  .orbit-token.three {
+    animation-delay: -4.6s;
+    transform: scale(0.72);
+    opacity: 0.75;
+  }
+
+  @keyframes orbit {
+    from {
+      transform: rotate(0deg) translateX(192px) rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg) translateX(192px) rotate(-360deg);
+    }
+  }
+
+  .node {
+    position: absolute;
+    width: 164px;
+    min-height: 112px;
+    border-radius: 26px;
+    padding: 18px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #ffd2b3;
+    box-shadow: 0 18px 40px rgba(74, 14, 14, 0.12);
+    cursor: pointer;
+    transition: 0.25s ease;
+  }
+
+  .node:hover,
+  .node.active {
+    transform: translateY(-6px) scale(1.04);
+    border-color: #ff7a00;
+    box-shadow: 0 24px 55px rgba(255, 122, 0, 0.32);
+  }
+
+  .node .icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #ff7a00, #e65100);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin-bottom: 12px;
+  }
+
+  .node h3 {
+    font-size: 19px;
+    font-weight: 900;
+    margin-bottom: 5px;
+  }
+
+  .node p {
+    font-size: 12px;
+    color: #7a3e2e;
+    line-height: 1.35;
+  }
+
+  .user-node {
+    left: 8px;
+    top: 190px;
+  }
+
+  .creator-node {
+    right: 8px;
+    top: 190px;
+  }
+
+  .platform-node {
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+  }
+
+  .platform-node:hover,
+  .platform-node.active {
+    transform: translateX(-50%) translateY(-6px) scale(1.04);
+  }
+
+  .center-badge {
+    position: absolute;
+    left: 50%;
+    top: 49%;
+    transform: translate(-50%, -50%);
+    width: 190px;
+    height: 190px;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 35% 30%, #ffffff, #fff6ed 55%, #ffe4cc);
+    border: 1px solid #ffd2b3;
+    box-shadow: inset 0 0 30px rgba(255, 122, 0, 0.13), 0 22px 55px rgba(74, 14, 14, 0.12);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+    text-align: center;
+  }
+
+  .center-badge .big {
+    font-size: 20px;
+    font-weight: 950;
+    margin-bottom: 8px;
+  }
+
+  .center-badge .small {
+    font-size: 12px;
+    color: #7a3e2e;
+    line-height: 1.35;
+    width: 140px;
+  }
+
+  .arrow-label {
+    position: absolute;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(255, 122, 0, 0.12);
+    border: 1px solid rgba(255, 122, 0, 0.22);
+    font-size: 12px;
+    font-weight: 800;
+    color: #e65100;
+  }
+
+  .label-1 {
+    left: 160px;
+    top: 122px;
+  }
+
+  .label-2 {
+    right: 122px;
+    top: 360px;
+  }
+
+  .label-3 {
+    left: 112px;
+    bottom: 104px;
+  }
+
+  .right {
+    border-radius: 34px;
+    background: rgba(255, 255, 255, 0.78);
+    border: 1px solid rgba(255, 210, 179, 0.95);
+    box-shadow: 0 30px 90px rgba(74, 14, 14, 0.1);
+    backdrop-filter: blur(18px);
+    padding: 34px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .right-kicker {
+    display: inline-flex;
+    width: fit-content;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: #ffe4cc;
+    color: #e65100;
+    font-size: 13px;
+    font-weight: 900;
+    margin-bottom: 16px;
+  }
+
+  .right h1 {
+    font-size: 38px;
+    line-height: 1.08;
+    letter-spacing: -1.1px;
+    margin-bottom: 12px;
+  }
+
+  .right .sub {
+    font-size: 16px;
+    color: #7a3e2e;
+    line-height: 1.55;
+    margin-bottom: 24px;
+  }
+
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+  }
+
+  .step {
+    border-radius: 22px;
+    padding: 16px 18px;
+    background: #ffffff;
+    border: 1px solid #ffe0cc;
+    box-shadow: 0 10px 24px rgba(74, 14, 14, 0.06);
+    transition: 0.25s ease;
+  }
+
+  .step.active {
+    background: linear-gradient(135deg, #fff6ed, #ffe4cc);
+    border-color: #ff7a00;
+    box-shadow: 0 16px 36px rgba(255, 122, 0, 0.2);
+    transform: translateX(-8px);
+  }
+
+  .step-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    font-weight: 950;
+    margin-bottom: 6px;
+  }
+
+  .step-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #fff0e2;
+    color: #e65100;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 950;
+  }
+
+  .step.active .step-num {
+    background: #ff7a00;
+    color: white;
+  }
+
+  .step p {
+    font-size: 13.5px;
+    line-height: 1.45;
+    color: #7a3e2e;
+  }
+
+  .bottom-message {
+    margin-top: 22px;
+    padding: 18px;
+    border-radius: 24px;
+    background: linear-gradient(135deg, #4a0e0e, #2a0a0a);
+    color: white;
+    font-size: 15px;
+    line-height: 1.45;
+    font-weight: 700;
+    box-shadow: 0 18px 42px rgba(74, 14, 14, 0.24);
+  }
+
+  .bottom-message span {
+    color: #ffbd7a;
+  }
+
+  @media (max-width: 1100px) {
+    body {
+      overflow: auto;
+    }
+
+    .slide {
+      height: auto;
+      min-height: 100vh;
+      grid-template-columns: 1fr;
+    }
+
+    .flow-area {
+      min-height: 620px;
+    }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="slide">
+
+  <section class="left">
+
+    <div class="wallet-card" data-target="wallet">
+      <div class="wallet-label">JioVibe Token Wallet</div>
+      <div class="wallet-balance">
+        <span class="coin">T</span>
+        <span>1,250</span>
+      </div>
+      <div class="wallet-note">Visible wallet balance for users and creators</div>
+    </div>
+
+    <div class="flow-title">
+      JioVibe Token Flow:<br>
+      <span>Wallet → User → Creator → Platform</span>
+    </div>
+
+    <div class="flow-area">
+      <div class="circle-wrap">
+
+        <div class="ring"></div>
+
+        <div class="orbit-token">T</div>
+        <div class="orbit-token two">T</div>
+        <div class="orbit-token three">T</div>
+
+        <div class="center-badge">
+          <div class="big">Closed Loop</div>
+          <div class="small">Tokens stay inside the platform economy</div>
+        </div>
+
+        <div class="arrow-label label-1">Purchase / Earn</div>
+        <div class="arrow-label label-2">Super Chat / Drops</div>
+        <div class="arrow-label label-3">AI Tools / Boosting</div>
+
+        <div class="node user-node" data-target="user">
+          <div class="icon">👤</div>
+          <h3>User</h3>
+          <p>Purchases or earns tokens by completing tasks.</p>
+        </div>
+
+        <div class="node creator-node" data-target="creator">
+          <div class="icon">🎥</div>
+          <h3>Creator</h3>
+          <p>Receives tokens through fan support and engagement.</p>
+        </div>
+
+        <div class="node platform-node" data-target="platform">
+          <div class="icon">⚙️</div>
+          <h3>Platform</h3>
+          <p>Receives tokens when creators use tools and services.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="right">
+    <div class="right-kicker">Token Economy Flow</div>
+
+    <h1>How tokens move inside JioVibe</h1>
+
+    <p class="sub">
+      The token works like an internal digital value system. Users can buy or earn tokens,
+      spend them on creators and marketplace features, while creators use those tokens for
+      platform tools. This keeps the economy active inside JioVibe.
+    </p>
+
+    <div class="steps">
+
+      <div class="step" id="step-wallet">
+        <div class="step-title">
+          <span class="step-num">1</span>
+          Token Wallet
+        </div>
+        <p>
+          Tokens are visible inside the JioVibe Wallet. The wallet shows the user or creator’s current balance.
+        </p>
+      </div>
+
+      <div class="step" id="step-user">
+        <div class="step-title">
+          <span class="step-num">2</span>
+          User purchases or earns tokens
+        </div>
+        <p>
+          Users can buy tokens or earn them through tasks, referrals, campaigns, watch-time rewards, and engagement activities.
+        </p>
+      </div>
+
+      <div class="step" id="step-creator">
+        <div class="step-title">
+          <span class="step-num">3</span>
+          User spends tokens on creators
+        </div>
+        <p>
+          Users can use tokens for Super Chat, Super Drop, donations, stickers, creator drops, premium access, marketplace rewards, and coupons.
+        </p>
+      </div>
+
+      <div class="step" id="step-platform">
+        <div class="step-title">
+          <span class="step-num">4</span>
+          Creator uses platform tools
+        </div>
+        <p>
+          Creators can spend earned tokens on AI editing, thumbnails, captions, translation, boosting, analytics, copyright management, and other creator tools.
+        </p>
+      </div>
+
+      <div class="step" id="step-loop">
+        <div class="step-title">
+          <span class="step-num">5</span>
+          Tokens come back to platform
+        </div>
+        <p>
+          When creators consume tools, tokens return to the platform. The platform can again reward users and continue the circular economy.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="bottom-message">
+      <span>Key Message:</span> Users earn/spend → Creators earn/use → Platform recycles → Users get rewarded again.
+    </div>
+  </section>
+
+</div>
+
+<script>
+  const hoverMap = {
+    wallet: "step-wallet",
+    user: "step-user",
+    creator: "step-creator",
+    platform: "step-platform"
+  };
+
+  const hoverItems = document.querySelectorAll("[data-target]");
+  const steps = document.querySelectorAll(".step");
+  const nodes = document.querySelectorAll(".node, .wallet-card");
+
+  function clearActive() {
+    steps.forEach(step => step.classList.remove("active"));
+    nodes.forEach(node => node.classList.remove("active"));
+  }
+
+  function activate(target) {
+    clearActive();
+
+    const stepId = hoverMap[target];
+    const step = document.getElementById(stepId);
+
+    if (step) step.classList.add("active");
+
+    document.querySelectorAll(`[data-target="${target}"]`).forEach(item => {
+      item.classList.add("active");
+    });
+  }
+
+  hoverItems.forEach(item => {
+    item.addEventListener("mouseenter", () => {
+      activate(item.dataset.target);
+    });
+
+    item.addEventListener("mouseleave", () => {
+      clearActive();
+    });
+  });
+
+  let autoTargets = ["wallet", "user", "creator", "platform"];
+  let index = 0;
+  let autoPlay = true;
+
+  setInterval(() => {
+    if (!autoPlay) return;
+    activate(autoTargets[index]);
+    index = (index + 1) % autoTargets.length;
+  }, 1800);
+
+  hoverItems.forEach(item => {
+    item.addEventListener("mouseenter", () => {
+      autoPlay = false;
+    });
+
+    item.addEventListener("mouseleave", () => {
+      autoPlay = true;
+    });
+  });
+
+  activate("wallet");
+</script>
+
+</body>
+</html>
